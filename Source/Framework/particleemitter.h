@@ -17,6 +17,8 @@ public:
 	void SpawnNewParticles(int x, int y, int amount, BackBuffer* backbuffer, ParticleType T);
 	bool Initialise(Sprite* sprite);
 
+	void SetParticleTimer(float timer);
+
 	void Process(float deltaTime);
 	void Draw(BackBuffer& backBuffer);
 protected:
@@ -26,6 +28,8 @@ private:
 public:
 protected:
 	std::vector<Particle*> m_particles;
+	//how often particles spawn
+	float m_particleTimer;
 private:
 
 };

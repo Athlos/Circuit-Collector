@@ -39,7 +39,12 @@ public:
 	void DrawSprite(Sprite& sprite);
 	void DrawRectangle(int x1, int y1, int x2, int y2);
 	void DrawLine(int x1, int y1, int x2, int y2);
-	void DrawText(const char* textOnScreen, int x, int y);
+
+	void DrawText();
+
+	void DrawText(SDL_Texture* textOnScreen, SDL_Rect bounds);
+	SDL_Texture* CreateText(std::string text, SDL_Color colour);
+
 	Sprite* CreateSprite(const char* pcFilename);
 	void DrawAnimatedSprite(AnimatedSprite& sprite, int x, int width);
 	AnimatedSprite* CreateAnimatedSprite(const char* pcFilename);
@@ -112,6 +117,8 @@ protected:
 	unsigned char m_clearRed;
 	unsigned char m_clearGreen;
 	unsigned char m_clearBlue;
+
+	TTF_Font* m_font;
 	
 private:
 

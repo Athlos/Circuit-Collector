@@ -12,7 +12,7 @@
 #include "fmod.hpp"
 #include "tower.h"
 #include "mine.h"
-
+#include "label.h"
 
 // Library includes:
 #include <cassert>
@@ -85,96 +85,8 @@ Game::~Game()
 	system->release();
 }
 
-bool Game::SellTower(int x, int y) 
-{
-	if (TowerClicked(x, y) == NULL) 
-	{
-		return false;
-	}
 
-	std::vector<Tower*>::iterator enemyIter = m_towers.begin();
-	bool s = false;
-	while (enemyIter != m_towers.end()) 
-	{
-		Tower* current = *enemyIter;
-		if (current == TowerClicked(x, y))
-		{
-			if (current->GetType() == RAIL) 
-			{
-				m_electricity += 25 * (current->GetLevel()+1);
-			}
-			else
-			{
-				m_electricity += 50 * (current->GetLevel() + 1);
-			}
-
-			enemyIter = m_towers.erase(enemyIter);
-			delete current;
-			s = true;
-		}
-		else
-		{
-			if (s)
-			{
-				current->SetPosition(current->GetPositionX()-80, current->GetPositionY());
-			}
-			enemyIter++;
-		}
-	}
-	return true;
-}
-
-void Game::UpgradeWall() 
-{
-	if (m_electricity < 200) 
-	{
-		return;
-	}
-	m_wall.SetMaxHealth(m_wall.GetMaxHealth() + 1000);
-	m_wall.SetCurrentHealth(m_wall.GetCurrentHealth() + 1000);
-	m_electricity -= 200;
-}
-
-void Game::RepairWall()
-{
-	float repairCost = ((static_cast<float>(m_wall.GetMaxHealth()) - static_cast<float>(m_wall.GetCurrentHealth())) / 10);
-
-	if (m_electricity >= repairCost)
-	{
-		m_wall.SetCurrentHealth(m_wall.GetMaxHealth());
-		m_electricity -= repairCost;
-	}
-	else
-	{
-		m_wall.SetCurrentHealth(m_wall.GetCurrentHealth() + (m_electricity * 10));
-		m_electricity = 0;
-	}
-}
-
-
-void Game::IncreaseWave()
-{
-	m_waveNumber++;
-	m_pBackBuffer->SetWave(m_waveNumber);
-}
-
-void Game::GiveElectricity()
-{
-	m_electricity += 1000;
-}
-
-void Game::UpgradeReticle() 
-{
-	if (m_electricity < 100) 
-	{
-		return;
-	}
-	m_electricity -= 100;
-	m_reticle.SetDamage(m_reticle.GetDamage() + 10);
-}
-
-bool
-Game::Initialise()
+bool Game::Initialise()
 {
 	//SET UP GRAPHICS AND INPUT
 	const int width = 800;
@@ -194,7 +106,6 @@ Game::Initialise()
 		return (false);
 	}
 
-	
 	srand(time(0));
 
 	//SET UP ENTITIES AND VARIABLES
@@ -216,7 +127,8 @@ Game::Initialise()
 	m_reticle.Initialise(reticleSprite);
 	m_reticle.SetDamage(30);
 
-	
+	m_starSprite = m_pBackBuffer->CreateSprite("assets\\smallstar.png");
+
 	UpdateControls();
 	UpdatePrices();
 
@@ -248,6 +160,21 @@ Game::Initialise()
 	result = m_towerPlacedRail->setMode(FMOD_LOOP_OFF);
 	result = m_mineLayed->setMode(FMOD_LOOP_OFF);
 	result = m_noMines->setMode(FMOD_LOOP_OFF);
+	result = m_combatSoundtrack->setMode(FMOD_LOOP_NORMAL);
+
+	//SET UP UI
+
+	//electricity label
+	std::string elecString = "Electricity: " + std::to_string(m_electricity);
+	m_electricityLabel = new Label(elecString);
+	m_electricityLabel->SetColour(0, 0, 255, 0);
+	m_electricityLabel->SetBounds(0, 0, 128, 24);
+
+	//health label
+	std::string healthString = "Health: " + std::to_string(m_wall.GetCurrentHealth());
+	m_healthLabel = new Label(healthString);
+	m_healthLabel->SetColour(255, 0, 0, 0);
+	m_healthLabel->SetBounds(670, 0, 128, 24);
 
 	m_lastTime = SDL_GetTicks();
 	m_lag = 0.0f;
@@ -255,8 +182,7 @@ Game::Initialise()
 	return (true);
 }
 
-bool
-Game::DoGameLoop()
+bool Game::DoGameLoop()
 {
 	const float stepSize = 1.0f / 60.0f;
 
@@ -290,8 +216,7 @@ Game::DoGameLoop()
 	return (m_looping);
 }
 
-void
-Game::Process(float deltaTime)
+void Game::Process(float deltaTime)
 {
 	// Count total simulation time elapsed:
 	m_elapsedSeconds += deltaTime;
@@ -314,36 +239,38 @@ Game::Process(float deltaTime)
 		LogManager::GetInstance().Log(other_string);
 
 		//DEAL DAMAGE TO WALL
-		if (!m_paused) 
+		if (!m_paused)
 		{
 			for each (Enemy* e in m_enemies)
 			{
 				if (e->GetPositionY() == m_wall.GetPositionY() - 64)
 				{
-					m_particles.SpawnNewParticles(e->GetPositionX()+32, m_wall.GetPositionY(), 3, m_pBackBuffer, BRICKPARTICLE);
-					if (m_slowedCounter > 0) 
+					m_particles.SpawnNewParticles(e->GetPositionX() + 32, m_wall.GetPositionY(), 3, m_pBackBuffer, BRICKPARTICLE);
+					if (m_slowedCounter > 0)
 					{
-						m_wall.TakeDamage(e->GetDamage()/10);
+						m_wall.TakeDamage(e->GetDamage() / 10);
 					}
-					else 
+					else
 					{
 						m_wall.TakeDamage(e->GetDamage());
 					}
 				}
 			}
+			UpdateWallHealthLabel();
 		}
 	}
-	m_reticle.Process(deltaTime);
-	m_pBackBuffer->UpdateElectricity(m_electricity);
-	m_pBackBuffer->UpdateHealth(m_wall.GetCurrentHealth());
 
-	if (m_wall.IsDead()) 
+	//Process GUI
+	m_reticle.Process(deltaTime);
+
+	//Check if game is over
+	if (m_wall.IsDead())
 	{
 		m_pBackBuffer->SetGameState(true);
 		return;
 	}
 
-	if (m_paused) 
+	if (m_paused)
 	{
 		return;
 	}
@@ -351,12 +278,12 @@ Game::Process(float deltaTime)
 
 	// Update the game world simulation:
 	m_slowedCounter -= deltaTime;
-	if (m_slowedCounter < 0) 
+	if (m_slowedCounter < 0)
 	{
 		m_slowedCounter = 0;
 	}
 
-	if (m_slowedCounter > 0) 
+	if (m_slowedCounter > 0)
 	{
 		deltaTime = deltaTime / 10;
 	}
@@ -386,7 +313,7 @@ Game::Process(float deltaTime)
 			iter = m_towerBullets.erase(iter);
 			delete current;
 		}
-		else 
+		else
 		{
 			current->Process(deltaTime);
 			if (static_cast<int>(current->GetPositionY()) <= 0)
@@ -400,16 +327,16 @@ Game::Process(float deltaTime)
 
 	std::vector<Enemy*>::iterator enemyIter = m_enemies.begin();
 
-	while (enemyIter != m_enemies.end()) 
+	while (enemyIter != m_enemies.end())
 	{
 		Enemy* current = *enemyIter;
-		if (current->IsDead()) 
+		if (current->IsDead())
 		{
-			m_electricity += current->GetReward()*m_waveNumber;
+			UpdateElectricity(current->GetReward()*m_waveNumber);
 			enemyIter = m_enemies.erase(enemyIter);
 			delete current;
 		}
-		else 
+		else
 		{
 			current->Process(deltaTime);
 			enemyIter++;
@@ -417,9 +344,9 @@ Game::Process(float deltaTime)
 	}
 
 	//CHECK MINE COLLISION
-	for (int i = 0; i < m_mines.size(); i++) 
+	for (int i = 0; i < m_mines.size(); i++)
 	{
-		for (int a = 0; a < m_enemies.size(); a++) 
+		for (int a = 0; a < m_enemies.size(); a++)
 		{
 			if (!m_enemies.at(a)->IsDead() && m_enemies.at(a)->IsCollidingWith(m_mines.at(i)->GetPositionX(), m_mines.at(i)->GetPositionY(), 32))
 			{
@@ -431,9 +358,10 @@ Game::Process(float deltaTime)
 		}
 	}
 
+	//CHECK BULLET COLLISION
 	for (int i = 0; i < m_towerBullets.size(); i++)
 	{
-		for (int a = 0; a < m_enemies.size(); a++) 
+		for (int a = 0; a < m_enemies.size(); a++)
 		{
 			if (m_enemies.at(a)->IsCollidingWith(m_towerBullets.at(i)->GetPositionX(), m_towerBullets.at(i)->GetPositionY(), 16))
 			{
@@ -445,25 +373,25 @@ Game::Process(float deltaTime)
 		}
 	}
 
-	for (int i = 0; i < m_mines.size(); i++) 
+	for (int i = 0; i < m_mines.size(); i++)
 	{
-		if (m_mines.at(i)->IsDead()) 
+		if (m_mines.at(i)->IsDead())
 		{
 			m_mines.erase(m_mines.begin() + i);
 		}
 	}
 
-	for each (Tower* e in m_towers) 
+	for each (Tower* e in m_towers)
 	{
 		e->Process(deltaTime);
 	}
 
-	for each (Explosion* b in m_explosions) 
+	for each (Explosion* b in m_explosions)
 	{
 		b->Process(deltaTime);
 	}
 
-	for (int i = 0; i < m_explosions.size(); i++) 
+	for (int i = 0; i < m_explosions.size(); i++)
 	{
 		if (m_explosions.at(i)->IsDead())
 		{
@@ -477,7 +405,7 @@ Game::Process(float deltaTime)
 
 	for each (Tower* t in m_towers)
 	{
-		if (t->ReadyToFire()) 
+		if (t->ReadyToFire())
 		{
 			FireTower(t);
 		}
@@ -488,18 +416,7 @@ Game::Process(float deltaTime)
 	system->update();
 }
 
-void Game::SlowMotion() 
-{
-	if (m_electricity < 150) 
-	{
-		return;
-	}
-	m_slowedCounter += 10.0f;
-	m_electricity -= 150;
-}
-
-void
-Game::Draw(BackBuffer& backBuffer)
+void Game::Draw(BackBuffer& backBuffer)
 {
 	++m_frameCount;
 
@@ -507,10 +424,10 @@ Game::Draw(BackBuffer& backBuffer)
 
 	m_particles.Draw(backBuffer);
 
+	//Draw items in all vectors
 	for each (Enemy* e in m_enemies)
 	{
 		e->Draw(*m_pBackBuffer);
-
 	}
 
 	for each (Mine* b in m_mines)
@@ -518,33 +435,128 @@ Game::Draw(BackBuffer& backBuffer)
 		b->Draw(*m_pBackBuffer);
 	}
 
-	for each (Tower* e in m_towers) 
+	for each (Tower* e in m_towers)
 	{
 		e->Draw(backBuffer, true);
 	}
 
-	for each (Explosion* e in m_explosions) 
+	for each (Explosion* e in m_explosions)
 	{
 		e->Draw(*m_pBackBuffer);
 	}
 
-	for each (Bullet* e in m_towerBullets) 
+	for each (Bullet* e in m_towerBullets)
 	{
 		e->Draw(*m_pBackBuffer);
 	}
-
-
 
 	if (!m_wall.IsDead())
 	{
 		m_wall.Draw(*m_pBackBuffer);
 	}
-		
-	backBuffer.DrawText("Electricity: ", 0, 0);
 
+	//DRAW UI ELEMENTS
+	backBuffer.DrawText();
+
+	m_electricityLabel->Draw(backBuffer);
+	m_healthLabel->Draw(backBuffer);
 	m_reticle.Draw(backBuffer, true);
 
 	backBuffer.Present();
+}
+
+bool Game::SellTower(int x, int y) 
+{
+	if (TowerClicked(x, y) == NULL) 
+	{
+		return false;
+	}
+
+	std::vector<Tower*>::iterator enemyIter = m_towers.begin();
+	bool s = false;
+	while (enemyIter != m_towers.end()) 
+	{
+		Tower* current = *enemyIter;
+		if (current == TowerClicked(x, y))
+		{
+			if (current->GetType() == RAIL) 
+			{
+				UpdateElectricity(25 * (current->GetLevel() + 1));
+			}
+			else
+			{
+				UpdateElectricity(50 * (current->GetLevel() + 1));
+			}
+
+			enemyIter = m_towers.erase(enemyIter);
+			delete current;
+			s = true;
+		}
+		else
+		{
+			if (s)
+			{
+				current->SetPosition(current->GetPositionX()-80, current->GetPositionY());
+			}
+			enemyIter++;
+		}
+	}
+	return true;
+}
+
+void Game::UpgradeWall() 
+{
+	if (m_electricity < 200) 
+	{
+		return;
+	}
+	m_wall.SetMaxHealth(m_wall.GetMaxHealth() + 1000);
+	m_wall.SetCurrentHealth(m_wall.GetCurrentHealth() + 1000);
+	UpdateElectricity(-200);
+	UpdateWallHealthLabel();
+}
+
+void Game::RepairWall()
+{
+	float repairCost = ((static_cast<float>(m_wall.GetMaxHealth()) - static_cast<float>(m_wall.GetCurrentHealth())) / 10);
+
+	if (m_electricity >= repairCost)
+	{
+		m_wall.SetCurrentHealth(m_wall.GetMaxHealth());
+		UpdateElectricity(-repairCost);
+	}
+	else
+	{
+		m_wall.SetCurrentHealth(m_wall.GetCurrentHealth() + (m_electricity * 10));
+		UpdateElectricity(-m_electricity);
+	}
+	UpdateWallHealthLabel();
+}
+
+void Game::IncreaseWave()
+{
+	m_waveNumber++;
+	m_pBackBuffer->SetWave(m_waveNumber);
+}
+
+void Game::UpgradeReticle() 
+{
+	if (m_electricity < 100) 
+	{
+		return;
+	}
+	UpdateElectricity(-100);
+	m_reticle.SetDamage(m_reticle.GetDamage() + 10);
+}
+
+void Game::SlowMotion() 
+{
+	if (m_electricity < 150) 
+	{
+		return;
+	}
+	m_slowedCounter += 10.0f;
+	UpdateElectricity(-150);
 }
 
 Tower* Game::TowerClicked(int x, int y) 
@@ -570,7 +582,7 @@ void Game::UpgradeTower(Tower* t)
 		}
 		t->SetDamage(t->GetDamage() + 50);
 		t->SetFiringSpeed(t->GetFiringSpeed() - 0.03);
-		m_electricity -= 100;
+		UpdateElectricity(-100);
 		t->SetLevel(t->GetLevel()+1);
 	}
 
@@ -581,7 +593,7 @@ void Game::UpgradeTower(Tower* t)
 		}
 		t->SetDamage(t->GetDamage() + 25);
 		t->SetFiringSpeed(t->GetFiringSpeed() - 0.1);
-		m_electricity -= 50;
+		UpdateElectricity(-50);
 		t->SetLevel(t->GetLevel() + 1);
 	}
 
@@ -772,7 +784,7 @@ bool Game::SpawnTower(int x, int y, int type)
 		one->SetSpawning();
 		m_towers.push_back(one);
 
-		m_electricity -= 50;
+		UpdateElectricity(-50);
 		break;
 	case 2:
 		if (m_electricity < 100)
@@ -789,7 +801,7 @@ bool Game::SpawnTower(int x, int y, int type)
 		two->SetAnimation(twoAnim);
 		two->SetSpawning();
 		m_towers.push_back(two);
-		m_electricity -= 100;
+		UpdateElectricity(-100);
 		break;
 	default:
 		break;
@@ -797,21 +809,34 @@ bool Game::SpawnTower(int x, int y, int type)
 	return true;
 }
 
-void
-Game::SpawnMine(int x, int y)
+void Game::SpawnMine()
 {
+	//Check if player can afford
 	if (m_electricity < 10)
 	{
 		result = system->playSound(m_noMines, 0, false, &channel);
 		return;
 	}
-	m_electricity -= 10;
+	UpdateElectricity(-10);
 	Mine* e = new Mine();
 	Sprite* enemySprite = m_pBackBuffer->CreateSprite("assets\\mine.png");
 	e->Initialise(enemySprite);
-	e->SetPosition(x, y);
+	e->SetPosition(m_reticle.GetPositionX() + 16, m_reticle.GetPositionY() + 16);
 	e->SetDamage(150);
 	result = system->playSound(m_mineLayed, 0, false, &channel);
 	m_mines.push_back(e);
 	m_mineCounter--;
+}
+
+void Game::UpdateElectricity(int amount)
+{
+	m_electricity += amount;
+	std::string eString = "Electricity: " + std::to_string(m_electricity);
+	m_electricityLabel->SetText(eString);
+}
+
+void Game::UpdateWallHealthLabel()
+{
+	std::string eString = "Health: " + std::to_string(m_wall.GetCurrentHealth());
+	m_healthLabel->SetText(eString);
 }

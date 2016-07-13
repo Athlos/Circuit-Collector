@@ -55,7 +55,7 @@ BackBuffer::~BackBuffer()
 	SDL_DestroyWindow(m_pWindow);
 	m_pWindow = 0;
 
-	SDL_FreeSurface(m_surface);
+	//SDL_FreeSurface(m_surface);
 	TTF_CloseFont(font);
 
 	IMG_Quit();
@@ -96,33 +96,26 @@ void BackBuffer::UpdateHealthUpgrade(int amount)
 
 void BackBuffer::UpdateHealth(int amount)
 {
-	char electricity[30] = "";
-
-	sprintf(electricity, "%d", amount);
-
-	char other_string[64] = "Health: "; 
-
-	strcat(other_string, electricity); 
+	std::string message = "Health: " + std::to_string(amount);
 
 	SDL_Color clrFg = { 220, 20, 60, 0 }; 
-	m_surface = TTF_RenderText_Solid(font, other_string, clrFg);
-	m_healthTexture = SDL_CreateTextureFromSurface(m_pRenderer, m_surface);
 
+	m_surface = SDL_GetWindowSurface(m_pWindow);
+	m_surface = TTF_RenderText_Solid(font, message.c_str(), clrFg);
+	m_healthTexture = SDL_CreateTextureFromSurface(m_pRenderer, m_surface);
+	SDL_FreeSurface(m_surface);
 }
 
 void BackBuffer::UpdateElectricity(int amount)
 {
-	char electricity[30] = "Electricity: ";
-
-	sprintf(electricity, "%d", amount);
-
-	char other_string[64] = "Electricity: "; 
-
-	strcat(other_string, electricity); 
+	std::string message = "Electricity: " + std::to_string(amount);
 
 	SDL_Color clrFg = { 30, 144, 255, 0 };  
-	m_surface = TTF_RenderText_Solid(font, other_string, clrFg);
+
+	m_surface = SDL_GetWindowSurface(m_pWindow);
+	m_surface = TTF_RenderText_Solid(font, message.c_str(), clrFg);
 	m_electricityTexture = SDL_CreateTextureFromSurface(m_pRenderer, m_surface);
+	SDL_FreeSurface(m_surface);
 }
 
 void BackBuffer::ShowControls(bool show)
@@ -143,6 +136,7 @@ void BackBuffer::SetWave(int amount)
 	SDL_Color clrFg = { 30, 144, 255, 0 };
 	m_surface = TTF_RenderText_Solid(font, other_string, clrFg);
 	m_waveTexture = SDL_CreateTextureFromSurface(m_pRenderer, m_surface);
+	SDL_FreeSurface(m_surface);
 }
 
 void BackBuffer::ShowPrices(bool show) 
@@ -150,15 +144,10 @@ void BackBuffer::ShowPrices(bool show)
 	m_prices = show;
 }
 
-void BackBuffer::DrawText(const char* textOnScreen, int x, int y)
+void BackBuffer::DrawText()
 {
 
 	SDL_Rect dest;
-	dest.x = 0;
-	dest.y = 0;
-	dest.w = 128;
-	dest.h = 16;
-	SDL_RenderCopy(m_pRenderer, m_electricityTexture, 0, &dest);
 
 	dest.x = 350;
 	dest.y = 0;
@@ -255,12 +244,6 @@ void BackBuffer::DrawText(const char* textOnScreen, int x, int y)
 		dest.y = 380;
 		SDL_RenderCopy(m_pRenderer, m_mouseCost, 0, &dest);		
 	}
-	
-	dest.x = 670;
-	dest.y = 0;
-	dest.w = 128;
-	dest.h = 16;
-	SDL_RenderCopy(m_pRenderer, m_healthTexture, 0, &dest);
 
 	dest.x = 350;
 	dest.y = 250;
@@ -354,6 +337,7 @@ bool BackBuffer::Initialise(int width, int height)
 
 	TTF_Init();
 	font = TTF_OpenFont("assets\\currentfont.ttf", 12);
+	m_font = TTF_OpenFont("assets\\currentfont.ttf", 12);
 	
 	SDL_Color clrFg = { 0, 0, 255, 0 };  // Blue ("Fg" is foreground)
 
@@ -435,7 +419,7 @@ bool BackBuffer::Initialise(int width, int height)
 	
 	m_surface = TTF_RenderText_Solid(font, "100 for 10 mouse damage", clrFg);
 	m_mouseCost = SDL_CreateTextureFromSurface(m_pRenderer, m_surface);
-
+	SDL_FreeSurface(m_surface);
 	//Quit label
 	m_surface = TTF_RenderText_Solid(font, "Press esc to quit", clrFg);
 	m_quitGame = SDL_CreateTextureFromSurface(m_pRenderer, m_surface);
@@ -526,4 +510,25 @@ void BackBuffer::SetClearColour(unsigned char r, unsigned char g, unsigned char 
 	m_clearRed = r;
 	m_clearGreen = g;
 	m_clearBlue = b;
+}
+
+void BackBuffer::DrawText(SDL_Texture* textOnScreen, SDL_Rect bounds)
+{
+	//Basic render of the texture of the label
+	SDL_RenderCopy(m_pRenderer, textOnScreen, 0, &bounds);
+}
+
+SDL_Texture* BackBuffer::CreateText(std::string text, SDL_Color colour)
+{
+	//Grab a surface
+	m_surface = SDL_GetWindowSurface(m_pWindow);
+
+	//create text and save into surface, then use surface to create a texture we can render
+	m_surface = TTF_RenderText_Solid(m_font, text.c_str(), colour);
+	SDL_Texture* tTexture = SDL_CreateTextureFromSurface(m_pRenderer, m_surface);
+	//Clean up surface, we grab a new one each time - need to look into why I do that
+	SDL_FreeSurface(m_surface);
+
+	return tTexture;
+
 }

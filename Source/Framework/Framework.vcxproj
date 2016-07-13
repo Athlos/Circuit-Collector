@@ -87,6 +87,7 @@
     <ClInclude Include="animatedsprite.h" />
     <ClInclude Include="backbuffer.h" />
     <ClInclude Include="bullet.h" />
+    <ClInclude Include="label.h" />
     <ClInclude Include="mine.h" />
     <ClInclude Include="enemy.h" />
     <ClInclude Include="entity.h" />
@@ -109,6 +110,7 @@
     <ClCompile Include="animatedsprite.cpp" />
     <ClCompile Include="backbuffer.cpp" />
     <ClCompile Include="bullet.cpp" />
+    <ClCompile Include="label.cpp" />
     <ClCompile Include="mine.cpp" />
     <ClCompile Include="enemy.cpp" />
     <ClCompile Include="entity.cpp" />

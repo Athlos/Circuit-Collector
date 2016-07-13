@@ -77,9 +77,7 @@ InputHandler::ProcessInput(Game& game)
 				}
 				break;
 			case SDLK_r:
-				int x, y;
-				SDL_GetMouseState(&x, &y);
-				game.SpawnMine(x, y);
+				game.SpawnMine();
 				break;
 			case SDLK_s:
 				game.SpawnEnemies(10);
@@ -111,7 +109,7 @@ InputHandler::ProcessInput(Game& game)
 				}
 				break;
 			case SDLK_F1:
-				game.GiveElectricity();
+				game.UpdateElectricity(1000);
 				break;
 			case SDLK_F2:
 				game.IncreaseWave();

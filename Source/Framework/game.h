@@ -8,6 +8,7 @@
 class BackBuffer;
 class InputHandler;
 class Sprite;
+class Label;
 
 #include "enemy.h";
 #include "mine.h";
@@ -35,7 +36,7 @@ public:
 
 	void SpawnEnemies(int amount);
 
-	void SpawnMine(int x, int y);
+	void SpawnMine();
 	void SpawnExplosion(int x, int y);
 
 	bool SpawnTower(int x, int y, int type);
@@ -55,6 +56,12 @@ public:
 	void IncreaseWave();
 	void GiveElectricity();
 	bool SellTower(int x, int y);
+
+	//Update counters
+	//Adds amount to current electricity, can take negative number
+	void UpdateElectricity(int amount);
+	//Adds amount to the wall health
+	void UpdateWallHealthLabel();
 	
 protected:
 	void Process(float deltaTime);
@@ -84,8 +91,6 @@ protected:
 	int m_FPS;
 	int m_numUpdates;
 	bool m_drawDebugInfo;
-
-
 	
 	int m_mineCounter;
 	bool m_paused;
@@ -96,16 +101,32 @@ protected:
 	bool m_showPrices;
 	float m_slowedCounter;
 
-	
+	//UI ELEMENTS
+	//Label for electricity
+	Label* m_electricityLabel;
+	//Label for health
+	Label* m_healthLabel;
+
+	// Star sprite to show tower levels
+	Sprite* m_starSprite;
 
 	//GAME ENTITIES
+
+	//game enemies
 	std::vector<Enemy*> m_enemies;
+	//mines on screen
 	std::vector<Mine*> m_mines;
+	//currently animating explosions
 	std::vector<Explosion*> m_explosions;
+	//towers placed
 	std::vector<Tower*> m_towers;
+	//bullets and projectiles fired
 	std::vector<Bullet*> m_towerBullets;
+	//protecting wall
 	Wall m_wall;
+	//aiming reticle
 	Reticle m_reticle;
+	//particle emitter for explosions
 	ParticleEmitter m_particles;
 
 

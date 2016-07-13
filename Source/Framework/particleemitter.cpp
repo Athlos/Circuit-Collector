@@ -10,6 +10,7 @@
 ParticleEmitter::ParticleEmitter()
 {
 	srand(time(0));
+	m_particleTimer = 0;
 }
 
 ParticleEmitter::~ParticleEmitter() 
@@ -65,6 +66,7 @@ void ParticleEmitter::Process(float deltaTime)
 		if (current->GetAge() <= 0) {
 			iter = m_particles.erase(iter);
 			delete current;
+			current = 0;
 		}
 		else 
 		{
@@ -80,4 +82,9 @@ void ParticleEmitter::Draw(BackBuffer& backBuffer)
 	{
 		p->Draw(backBuffer);
 	}
+}
+
+void ParticleEmitter::SetParticleTimer(float timer)
+{
+	m_particleTimer = timer;
 }
