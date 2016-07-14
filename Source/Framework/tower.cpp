@@ -2,6 +2,7 @@
 #include "tower.h"
 #include "backbuffer.h"
 #include "animatedsprite.h"
+#include "label.h"
 #include <cassert>
 
 
@@ -10,6 +11,8 @@ Tower::Tower()
 	Entity::Entity();
 	m_timePassed = 0.0f;
 	m_level = 0;
+
+	m_levelLabel = new Label(std::to_string(m_level));
 }
 
 Tower::~Tower()
@@ -39,6 +42,7 @@ Tower::Draw(BackBuffer& backBuffer, bool spawn)
 	{
 		m_pSprite->Draw(backBuffer);
 	}
+	m_levelLabel->Draw(backBuffer);
 }
 
 void Tower::SetAnimation(AnimatedSprite* anim)
@@ -64,6 +68,7 @@ int Tower::GetLevel()
 void Tower::SetLevel(int level)
 {
 	m_level = level;
+	m_levelLabel->SetText(std::to_string(m_level));
 }
 
 void Tower::Process(float deltaTime)
@@ -71,8 +76,8 @@ void Tower::Process(float deltaTime)
 	Entity::Process(deltaTime);
 	m_spawnAnim->Process(deltaTime);
 	m_timePassed += deltaTime;
-	m_spawnAnim->SetX(static_cast<int>(m_x));
-	m_spawnAnim->SetY(static_cast<int>(m_y));
+	//m_spawnAnim->SetX(static_cast<int>(m_x));
+	//m_spawnAnim->SetY(static_cast<int>(m_y));
 }
 
 void Tower::SetDamage(int amount)
@@ -113,4 +118,13 @@ void Tower::SetFiringSpeed(float speed)
 float Tower::GetFiringSpeed()
 {
 	return m_firingSpeed;
+}
+
+void Tower::SetPosition(float x, float y)
+{
+	m_x = x;
+	m_y = y;
+	m_pSprite->SetX(static_cast<int>(m_x));
+	m_pSprite->SetY(static_cast<int>(m_y));
+	m_levelLabel->SetBounds(x, y, 20, 16);
 }

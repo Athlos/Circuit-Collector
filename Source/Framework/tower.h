@@ -8,6 +8,7 @@
 #include <cmath>
 #include <ctime>
 
+class Label;
 
 enum TowerType
 {
@@ -38,6 +39,7 @@ public:
 	void Draw(BackBuffer& backBuffer, bool spawn);
 	void SetAnimation(AnimatedSprite* anim);
 	void SetSpawning();
+	void SetPosition(float x, float y);
 
 protected:
 private:
@@ -52,6 +54,10 @@ protected:
 	int m_level;
 	AnimatedSprite* m_spawnAnim;
 	bool m_spawning;
+
+	//Label to show the tower level
+	Label* m_levelLabel;
+
 private:
 
 };

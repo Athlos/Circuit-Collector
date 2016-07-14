@@ -40,8 +40,7 @@ Entity::~Entity()
 {
 }
 
-bool
-Entity::Initialise(Sprite* sprite)
+bool Entity::Initialise(Sprite* sprite)
 {
 	assert(sprite);
 	m_pSprite = sprite;
@@ -54,8 +53,7 @@ bool Entity::IsDead() const
 	return m_dead;
 }
 
-void 
-Entity::Process(float deltaTime)
+void Entity::Process(float deltaTime)
 {
 	m_pSprite->SetX(static_cast<int>(m_x));
 	m_pSprite->SetY(static_cast<int>(m_y));

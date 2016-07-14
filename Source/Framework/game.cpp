@@ -624,8 +624,7 @@ void Game::StartWave()
 	m_waveNumber++;
 }
 
-void
-Game::SpawnEnemies(int amount)
+void Game::SpawnEnemies(int amount)
 {
 	if (m_enemies.size() > 0) 
 	{
@@ -635,7 +634,6 @@ Game::SpawnEnemies(int amount)
 	m_pBackBuffer->SetWave(m_waveNumber);
 	while (amount > 0)
 	{
-
 		int randomizer = (rand() % 3) + 1;
 		int x = (amount % 10) * 80;
 		int y = -70;
@@ -817,15 +815,17 @@ void Game::SpawnMine()
 		result = system->playSound(m_noMines, 0, false, &channel);
 		return;
 	}
+
 	UpdateElectricity(-10);
 	Mine* e = new Mine();
 	Sprite* enemySprite = m_pBackBuffer->CreateSprite("assets\\mine.png");
 	e->Initialise(enemySprite);
 	e->SetPosition(m_reticle.GetPositionX() + 16, m_reticle.GetPositionY() + 16);
 	e->SetDamage(150);
+
+	//play audio, push into array
 	result = system->playSound(m_mineLayed, 0, false, &channel);
 	m_mines.push_back(e);
-	m_mineCounter--;
 }
 
 void Game::UpdateElectricity(int amount)
