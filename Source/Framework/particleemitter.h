@@ -7,14 +7,13 @@
 #include "playerbullettrailparticle.h"
 #include <vector>
 
-
-
 class ParticleEmitter : public Entity
 {
 public:
 	ParticleEmitter();
 	~ParticleEmitter();
 	void SpawnNewParticles(int x, int y, int amount, BackBuffer* backbuffer, ParticleType T);
+	void SpawnTextParticle(int x, int y, std::string message);
 	bool Initialise(Sprite* sprite);
 
 	void SetParticleTimer(float timer);

@@ -2,6 +2,7 @@
 #include "particle.h"
 #include "backbuffer.h"
 #include "logmanager.h"
+#include "textparticle.h"
 
 #include <cmath>
 #include <ctime>
@@ -56,6 +57,13 @@ void ParticleEmitter::SpawnNewParticles(int x, int y, int amount, BackBuffer* ba
 	}
 }
 
+void ParticleEmitter::SpawnTextParticle(int x, int y, std::string message)
+{
+	TextParticle* textP = new TextParticle();
+	textP->SpawnParticle(x, y, message);
+	m_particles.push_back(textP);
+}
+
 void ParticleEmitter::Process(float deltaTime)
 {
 	std::vector<Particle*>::iterator iter = m_particles.begin();
@@ -70,7 +78,15 @@ void ParticleEmitter::Process(float deltaTime)
 		}
 		else 
 		{
-			current->Process(deltaTime);
+			if (current->GetType() == TEXT)
+			{
+				TextParticle* textP = static_cast<TextParticle*>(current);
+				textP->Process(deltaTime);
+			}
+			else
+			{
+				current->Process(deltaTime);
+			}
 			iter++;
 		}
 	}
@@ -80,7 +96,16 @@ void ParticleEmitter::Draw(BackBuffer& backBuffer)
 {
 	for each(Particle* p in m_particles) 
 	{
-		p->Draw(backBuffer);
+		//cast to text particle if relevant
+		if (p->GetType() == TEXT)
+		{
+			TextParticle* textP = static_cast<TextParticle*>(p);
+			textP->Draw(backBuffer);
+		}
+		else
+		{
+			p->Draw(backBuffer);
+		}
 	}
 }
 

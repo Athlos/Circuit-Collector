@@ -692,6 +692,8 @@ void Game::ShootEnemy(int x, int y)
 	{
 		if (e->IsClickedOn(m_reticle.GetPositionX() + 16, m_reticle.GetPositionY() + 16)) 
 		{
+			//show damage 
+			m_particles.SpawnTextParticle(x + 64, y, std::to_string(m_reticle.GetDamage()));
 			e->TakeDamage(m_reticle.GetDamage());
 			m_reticle.SetFiring();
 			if (e->IsDead())

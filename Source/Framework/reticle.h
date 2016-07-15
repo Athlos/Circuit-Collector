@@ -11,7 +11,10 @@ class Entity;
 #include "animatedsprite.h"
 
 #include <cassert>
+#include <vector>
 
+class Label;
+class ParticleEmitter;
 
 
 class Reticle : public Entity

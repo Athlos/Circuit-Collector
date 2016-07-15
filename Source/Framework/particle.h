@@ -11,7 +11,8 @@ enum ParticleType
 	ALIENEXPLOSION,
 	PLAYERBULLETTRAIL,
 	BEAMTRAIL,
-	BRICKPARTICLE
+	BRICKPARTICLE,
+	TEXT
 };
 
 class Particle : public Entity

@@ -1,6 +1,8 @@
 #include "reticle.h"
 #include "sprite.h"
 #include "backbuffer.h"
+#include "label.h"
+#include "particleemitter.h"
 
 #include <SDL.h>
 

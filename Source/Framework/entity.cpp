@@ -1,4 +1,3 @@
-// 717310 C++ SDL Framework
 
 // This include:
 #include "entity.h"
@@ -55,14 +54,9 @@ bool Entity::IsDead() const
 
 void Entity::Process(float deltaTime)
 {
-	m_pSprite->SetX(static_cast<int>(m_x));
-	m_pSprite->SetY(static_cast<int>(m_y));
-
-	// Ex006.2: Generic position update, based upon velocity (and time).
 	m_x += deltaTime * m_velocityX;
 	m_y += deltaTime * m_velocityY;
-	
-	// Ex006.2: Boundary checking and position capping. 
+
 	if (m_x >= 800-m_pSprite->GetWidth())
 	{
 		m_x = (800-m_pSprite->GetWidth());
@@ -73,6 +67,9 @@ void Entity::Process(float deltaTime)
 		m_x = 0;
 		m_velocityX = 0;
 	}
+
+	m_pSprite->SetX(static_cast<int>(m_x));
+	m_pSprite->SetY(static_cast<int>(m_y));
 }
 
 bool Entity::IsClickedOn(int x, int y)
@@ -93,15 +90,13 @@ bool Entity::IsClickedOn(int x, int y)
 	return (false);
 }
 
-void 
-Entity::Draw(BackBuffer& backBuffer)
+void Entity::Draw(BackBuffer& backBuffer)
 {
 	assert(m_pSprite);
 	m_pSprite->Draw(backBuffer);
 }
 
-bool
-Entity::IsCollidingWith(int x, int y, int radius)
+bool Entity::IsCollidingWith(int x, int y, int radius)
 {
 	if (sqrt((x - m_x) * (x - m_x) + (y - m_y) * (y - m_y)) < radius + 16)
 	{

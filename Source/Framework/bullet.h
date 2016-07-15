@@ -12,7 +12,7 @@ public:
 	void SetDamage(int amount);
 	int GetDamage();
 	void Process(float deltaTime);
-	bool Bullet::IsOutOfBounds();
+	bool IsOutOfBounds();
 	void SetParticleType(ParticleType t);
 	ParticleType GetParticleType();
 protected:

@@ -32,14 +32,15 @@ void Particle::Process(float deltaTime)
 	{
 		m_accelerationY = 0;
 	}
+	//If particle is of type text, it is essentially a moving label with a lifespan, so it must be moved separatly
 	Entity::Process(deltaTime);
 	m_age -= deltaTime;
+
+	//set death immediatly if out of screen bounds
 	if (m_y >= 595) 
 	{
 		m_age = 0;
 	}
-
-
 }
 
 ParticleType Particle::GetType()

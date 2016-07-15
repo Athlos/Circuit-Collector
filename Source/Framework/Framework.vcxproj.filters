@@ -64,7 +64,12 @@
     <ClCompile Include="wall.cpp">
       <Filter>Source</Filter>
     </ClCompile>
-    <ClCompile Include="label.cpp" />
+    <ClCompile Include="label.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="textparticle.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="alienexplosionparticle.h">
@@ -127,7 +132,12 @@
     <ClInclude Include="wall.h">
       <Filter>Headers</Filter>
     </ClInclude>
-    <ClInclude Include="label.h" />
+    <ClInclude Include="label.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="textparticle.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Headers">
