@@ -12,13 +12,9 @@
 
 
 #include <stdio.h>
-
 #include <stdlib.h>
-
 #include <string>
-
 #include <vector>
-
 #include <time.h>
 
 
@@ -161,8 +157,8 @@ bool BackBuffer::Initialise(int width, int height)
 	//m_electricityTexture = SDL_CreateTextureFromSurface(m_pRenderer, m_surface);
 
 	//Cursor settings
-	SDL_SetRelativeMouseMode(SDL_TRUE);
-	SDL_WarpMouseInWindow(m_pWindow, 400, 300);
+	//SDL_SetRelativeMouseMode(SDL_TRUE);
+	//SDL_WarpMouseInWindow(m_pWindow, 400, 300);
 
 	return (true);
 }

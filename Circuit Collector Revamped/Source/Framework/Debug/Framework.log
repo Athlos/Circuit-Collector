@@ -1,31 +1,17 @@
-﻿Build started 09-Apr-17 11:00:44 AM.
-     1>Project "C:\Users\Pascal\Desktop\SDL Projects\Circuit Collector\Circuit-Collector\Circuit Collector Revamped\Source\Framework\Framework.vcxproj" on node 2 (Build target(s)).
-     1>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V120\Microsoft.CppBuild.targets(388,5): warning MSB8028: The intermediate directory (Debug\) contains files shared from another project (Assignment 1.vcxproj, Framework.vcxproj).  This can lead to incorrect clean and rebuild behavior.
-     1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"C:\Users\Pascal\Desktop\SDL Projects\Circuit Collector\Circuit-Collector\Circuit Collector Revamped\Source\\SDL\SDL2-2.0.3\include\\" /I"C:\Users\Pascal\Desktop\SDL Projects\Circuit Collector\Circuit-Collector\Circuit Collector Revamped\Source\\SDL\SDL2_image-2.0.0\include" /I"C:\Users\Pascal\Desktop\SDL Projects\Circuit Collector\Circuit-Collector\Circuit Collector Revamped\Source\\FMOD\inc\\" /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt player.cpp
-         player.cpp
-       Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Pascal\Desktop\SDL Projects\Circuit Collector\Circuit-Collector\Circuit Collector Revamped\Source\Debug\Circuit Breaker.exe" /INCREMENTAL /NOLOGO /LIBPATH:"C:\Users\Pascal\Desktop\SDL Projects\Circuit Collector\Circuit-Collector\Circuit Collector Revamped\Source\\SDL\SDL2-2.0.3\lib\x86" /LIBPATH:"C:\Users\Pascal\Desktop\SDL Projects\Circuit Collector\Circuit-Collector\Circuit Collector Revamped\Source\\SDL\SDL2_image-2.0.0\lib\x86" /LIBPATH:"C:\Users\Pascal\Desktop\SDL Projects\Circuit Collector\Circuit-Collector\Circuit Collector Revamped\Source\\FMOD\lib\\" SDL2.lib SDL2main.lib SDL2_image.lib fmodL_vc.lib SDL2_ttf.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Pascal\Desktop\SDL Projects\Circuit Collector\Circuit-Collector\Circuit Collector Revamped\Source\Debug\Circuit Breaker.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Pascal\Desktop\SDL Projects\Circuit Collector\Circuit-Collector\Circuit Collector Revamped\Source\Debug\Circuit Breaker.lib" /MACHINE:X86 Debug\animatedsprite.obj
-         Debug\backbuffer.obj
-         Debug\label.obj
-         Debug\enemy.obj
-         Debug\entity.obj
-         Debug\explosion.obj
-         Debug\game.obj
-         Debug\inputhandler.obj
-         Debug\logmanager.obj
-         Debug\main.obj
-         Debug\particle.obj
-         Debug\particleemitter.obj
-         Debug\player.obj
-         Debug\playerbullettrailparticle.obj
-         Debug\sprite.obj
-         Debug\textparticle.obj
-         Debug\texture.obj
-         Debug\texturemanager.obj
-         Framework.vcxproj -> C:\Users\Pascal\Desktop\SDL Projects\Circuit Collector\Circuit-Collector\Circuit Collector Revamped\Source\Debug\Circuit Breaker.exe
-     1>Done Building Project "C:\Users\Pascal\Desktop\SDL Projects\Circuit Collector\Circuit-Collector\Circuit Collector Revamped\Source\Framework\Framework.vcxproj" (Build target(s)).
-
-Build succeeded.
-
-Time Elapsed 00:00:00.88
+﻿  game.cpp
+c:\users\pascal\desktop\sdl projects\circuit collector\circuit-collector\circuit collector revamped\source\framework\game.h(16): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+c:\users\pascal\desktop\sdl projects\circuit collector\circuit-collector\circuit collector revamped\source\framework\game.h(18): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+c:\users\pascal\desktop\sdl projects\circuit collector\circuit-collector\circuit collector revamped\source\framework\game.cpp(64): warning C4244: 'argument' : conversion from 'time_t' to 'unsigned int', possible loss of data
+c:\users\pascal\desktop\sdl projects\circuit collector\circuit-collector\circuit collector revamped\source\framework\game.cpp(150): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+c:\users\pascal\desktop\sdl projects\circuit collector\circuit-collector\circuit collector revamped\source\framework\game.cpp(152): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
+c:\users\pascal\desktop\sdl projects\circuit collector\circuit-collector\circuit collector revamped\source\framework\game.cpp(154): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+c:\users\pascal\desktop\sdl projects\circuit collector\circuit-collector\circuit collector revamped\source\framework\game.cpp(155): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+c:\users\pascal\desktop\sdl projects\circuit collector\circuit-collector\circuit collector revamped\source\framework\game.cpp(260): warning C4018: '<' : signed/unsigned mismatch
+c:\users\pascal\desktop\sdl projects\circuit collector\circuit-collector\circuit collector revamped\source\framework\game.cpp(262): warning C4018: '<' : signed/unsigned mismatch
+c:\users\pascal\desktop\sdl projects\circuit collector\circuit-collector\circuit collector revamped\source\framework\game.cpp(264): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+c:\users\pascal\desktop\sdl projects\circuit collector\circuit-collector\circuit collector revamped\source\framework\game.cpp(295): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+c:\users\pascal\desktop\sdl projects\circuit collector\circuit-collector\circuit collector revamped\source\framework\game.cpp(315): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+c:\users\pascal\desktop\sdl projects\circuit collector\circuit-collector\circuit collector revamped\source\framework\game.cpp(316): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+c:\users\pascal\desktop\sdl projects\circuit collector\circuit-collector\circuit collector revamped\source\framework\game.cpp(318): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
+c:\users\pascal\desktop\sdl projects\circuit collector\circuit-collector\circuit collector revamped\source\framework\game.cpp(319): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
+  Framework.vcxproj -> C:\Users\Pascal\Desktop\SDL Projects\Circuit Collector\Circuit-Collector\Circuit Collector Revamped\Source\Debug\Circuit Breaker.exe

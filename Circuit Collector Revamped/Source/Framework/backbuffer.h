@@ -14,8 +14,6 @@ class AnimatedSprite;
 struct SDL_Window;
 struct SDL_Renderer;
 
-
-
 class BackBuffer
 {
 	//Member Methods:
@@ -40,6 +38,7 @@ public:
 	void DrawText(SDL_Texture* textOnScreen, SDL_Rect bounds);
 	SDL_Texture* CreateText(std::string text, SDL_Color colour);
 
+	// Creates a sprite from an image on disk
 	Sprite* CreateSprite(const char* pcFilename);
 	void DrawAnimatedSprite(AnimatedSprite& sprite, int x, int width);
 	AnimatedSprite* CreateAnimatedSprite(const char* pcFilename);

@@ -8,6 +8,7 @@ class LogManager
 public:
 	static LogManager& GetInstance();
 	~LogManager();
+	static void DestroyInstance();
 
 	void Log(const char* pcMessage);
 protected:

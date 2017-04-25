@@ -1,10 +1,15 @@
-// 717310 C++ SDL Framework
 #ifndef __ENTITY_H__
 #define __ENTITY_H__
 
 // Forward Declarations:
 class BackBuffer;
 class Sprite;
+
+struct Position
+{
+	float x;
+	float y;
+};
 
 class Entity
 {
@@ -33,6 +38,8 @@ public:
 	void SetVerticalVelocity(float y);
 	void SetPosition(float x, float y);
 	bool IsClickedOn(int x, int y);
+
+	Sprite* GetSprite();
 
 protected:
 

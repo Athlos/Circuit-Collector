@@ -1,21 +1,35 @@
-c:\users\pascal\desktop\sdl projects\core\sdlcore\sdl core engine\source\framework\debug\vc120.pdb
-c:\users\pascal\desktop\sdl projects\core\sdlcore\sdl core engine\source\framework\debug\vc120.idb
-c:\users\pascal\desktop\sdl projects\core\sdlcore\sdl core engine\source\framework\debug\animatedsprite.obj
-c:\users\pascal\desktop\sdl projects\core\sdlcore\sdl core engine\source\framework\debug\backbuffer.obj
-c:\users\pascal\desktop\sdl projects\core\sdlcore\sdl core engine\source\framework\debug\label.obj
-c:\users\pascal\desktop\sdl projects\core\sdlcore\sdl core engine\source\framework\debug\enemy.obj
-c:\users\pascal\desktop\sdl projects\core\sdlcore\sdl core engine\source\framework\debug\entity.obj
-c:\users\pascal\desktop\sdl projects\core\sdlcore\sdl core engine\source\framework\debug\explosion.obj
-c:\users\pascal\desktop\sdl projects\core\sdlcore\sdl core engine\source\framework\debug\inputhandler.obj
-c:\users\pascal\desktop\sdl projects\core\sdlcore\sdl core engine\source\framework\debug\logmanager.obj
-c:\users\pascal\desktop\sdl projects\core\sdlcore\sdl core engine\source\framework\debug\main.obj
-c:\users\pascal\desktop\sdl projects\core\sdlcore\sdl core engine\source\framework\debug\particle.obj
-c:\users\pascal\desktop\sdl projects\core\sdlcore\sdl core engine\source\framework\debug\particleemitter.obj
-c:\users\pascal\desktop\sdl projects\core\sdlcore\sdl core engine\source\framework\debug\playerbullettrailparticle.obj
-c:\users\pascal\desktop\sdl projects\core\sdlcore\sdl core engine\source\framework\debug\sprite.obj
-c:\users\pascal\desktop\sdl projects\core\sdlcore\sdl core engine\source\framework\debug\textparticle.obj
-c:\users\pascal\desktop\sdl projects\core\sdlcore\sdl core engine\source\framework\debug\texture.obj
-c:\users\pascal\desktop\sdl projects\core\sdlcore\sdl core engine\source\framework\debug\texturemanager.obj
-c:\users\pascal\desktop\sdl projects\core\sdlcore\sdl core engine\source\framework\debug\circuit breaker.tlog\cl.command.1.tlog
-c:\users\pascal\desktop\sdl projects\core\sdlcore\sdl core engine\source\framework\debug\circuit breaker.tlog\cl.read.1.tlog
-c:\users\pascal\desktop\sdl projects\core\sdlcore\sdl core engine\source\framework\debug\circuit breaker.tlog\cl.write.1.tlog
+c:\users\pascal\desktop\sdl projects\circuit collector\circuit-collector\circuit collector revamped\source\framework\debug\vc120.pdb
+c:\users\pascal\desktop\sdl projects\circuit collector\circuit-collector\circuit collector revamped\source\framework\debug\vc120.idb
+c:\users\pascal\desktop\sdl projects\circuit collector\circuit-collector\circuit collector revamped\source\framework\debug\label.obj
+c:\users\pascal\desktop\sdl projects\circuit collector\circuit-collector\circuit collector revamped\source\framework\debug\enemy.obj
+c:\users\pascal\desktop\sdl projects\circuit collector\circuit-collector\circuit collector revamped\source\framework\debug\entity.obj
+c:\users\pascal\desktop\sdl projects\circuit collector\circuit-collector\circuit collector revamped\source\framework\debug\explosion.obj
+c:\users\pascal\desktop\sdl projects\circuit collector\circuit-collector\circuit collector revamped\source\framework\debug\game.obj
+c:\users\pascal\desktop\sdl projects\circuit collector\circuit-collector\circuit collector revamped\source\framework\debug\inputhandler.obj
+c:\users\pascal\desktop\sdl projects\circuit collector\circuit-collector\circuit collector revamped\source\framework\debug\logmanager.obj
+c:\users\pascal\desktop\sdl projects\circuit collector\circuit-collector\circuit collector revamped\source\framework\debug\main.obj
+c:\users\pascal\desktop\sdl projects\circuit collector\circuit-collector\circuit collector revamped\source\framework\debug\maptile.obj
+c:\users\pascal\desktop\sdl projects\circuit collector\circuit-collector\circuit collector revamped\source\framework\debug\particle.obj
+c:\users\pascal\desktop\sdl projects\circuit collector\circuit-collector\circuit collector revamped\source\framework\debug\particleemitter.obj
+c:\users\pascal\desktop\sdl projects\circuit collector\circuit-collector\circuit collector revamped\source\framework\debug\player.obj
+c:\users\pascal\desktop\sdl projects\circuit collector\circuit-collector\circuit collector revamped\source\framework\debug\playerbullettrailparticle.obj
+c:\users\pascal\desktop\sdl projects\circuit collector\circuit-collector\circuit collector revamped\source\framework\debug\projectile.obj
+c:\users\pascal\desktop\sdl projects\circuit collector\circuit-collector\circuit collector revamped\source\framework\debug\projectilespawner.obj
+c:\users\pascal\desktop\sdl projects\circuit collector\circuit-collector\circuit collector revamped\source\framework\debug\sprite.obj
+c:\users\pascal\desktop\sdl projects\circuit collector\circuit-collector\circuit collector revamped\source\framework\debug\textparticle.obj
+c:\users\pascal\desktop\sdl projects\circuit collector\circuit-collector\circuit collector revamped\source\framework\debug\texture.obj
+c:\users\pascal\desktop\sdl projects\circuit collector\circuit-collector\circuit collector revamped\source\framework\debug\texturemanager.obj
+c:\users\pascal\desktop\sdl projects\circuit collector\circuit-collector\circuit collector revamped\source\framework\debug\tower.obj
+c:\users\pascal\desktop\sdl projects\circuit collector\circuit-collector\circuit collector revamped\source\framework\debug\animatedsprite.obj
+c:\users\pascal\desktop\sdl projects\circuit collector\circuit-collector\circuit collector revamped\source\framework\debug\backbuffer.obj
+c:\users\pascal\desktop\sdl projects\circuit collector\circuit-collector\circuit collector revamped\source\framework\debug\enemyspawner.obj
+c:\users\pascal\desktop\sdl projects\circuit collector\circuit-collector\circuit collector revamped\source\framework\debug\gamemap.obj
+c:\users\pascal\desktop\sdl projects\circuit collector\circuit-collector\circuit collector revamped\source\debug\circuit breaker.ilk
+c:\users\pascal\desktop\sdl projects\circuit collector\circuit-collector\circuit collector revamped\source\debug\circuit breaker.exe
+c:\users\pascal\desktop\sdl projects\circuit collector\circuit-collector\circuit collector revamped\source\debug\circuit breaker.pdb
+c:\users\pascal\desktop\sdl projects\circuit collector\circuit-collector\circuit collector revamped\source\framework\debug\circuit breaker.tlog\cl.command.1.tlog
+c:\users\pascal\desktop\sdl projects\circuit collector\circuit-collector\circuit collector revamped\source\framework\debug\circuit breaker.tlog\cl.read.1.tlog
+c:\users\pascal\desktop\sdl projects\circuit collector\circuit-collector\circuit collector revamped\source\framework\debug\circuit breaker.tlog\cl.write.1.tlog
+c:\users\pascal\desktop\sdl projects\circuit collector\circuit-collector\circuit collector revamped\source\framework\debug\circuit breaker.tlog\link.command.1.tlog
+c:\users\pascal\desktop\sdl projects\circuit collector\circuit-collector\circuit collector revamped\source\framework\debug\circuit breaker.tlog\link.read.1.tlog
+c:\users\pascal\desktop\sdl projects\circuit collector\circuit-collector\circuit collector revamped\source\framework\debug\circuit breaker.tlog\link.write.1.tlog

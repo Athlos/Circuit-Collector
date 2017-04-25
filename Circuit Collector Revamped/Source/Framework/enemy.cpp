@@ -1,4 +1,3 @@
-
 #include "enemy.h";
 
 #include "entity.h";
@@ -11,12 +10,9 @@ Enemy::Enemy()
 
 Enemy::~Enemy() 
 {
+	
 }
 
-int Enemy::GetReward()
-{
-	return m_reward;
-}
 void Enemy::SetReward(int amount) 
 {
 	m_reward = amount;
@@ -32,11 +28,6 @@ void Enemy::SetData(int health, int speed, int damage)
 bool Enemy::IsClickedOn(int x, int y) 
 {
 	return (Entity::IsClickedOn(x, y));
-}
-
-int Enemy::GetDamage()
-{
-	return m_damage;
 }
 
 void Enemy::TakeDamage(int amount) 
@@ -65,4 +56,19 @@ void Enemy::SetPosition(float x, float y)
 	m_y = y;
 	m_pSprite->SetX(static_cast<int>(m_x));
 	m_pSprite->SetY(static_cast<int>(m_y));
+}
+
+int Enemy::GetDamage()
+{
+	return m_damage;
+}
+
+int Enemy::GetReward()
+{
+	return m_reward;
+}
+
+int Enemy::GetHealth()
+{
+	return m_health;
 }

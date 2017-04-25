@@ -1,12 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="animatedsprite.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
-    <ClCompile Include="backbuffer.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
     <ClCompile Include="enemy.cpp">
       <Filter>Source</Filter>
     </ClCompile>
@@ -19,50 +13,68 @@
     <ClCompile Include="game.cpp">
       <Filter>Source</Filter>
     </ClCompile>
+    <ClCompile Include="player.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="gamemap.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="maptile.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="tower.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="backbuffer.cpp">
+      <Filter>Core Engine\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="animatedsprite.cpp">
+      <Filter>Core Engine\Source</Filter>
+    </ClCompile>
     <ClCompile Include="inputhandler.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
-    <ClCompile Include="logmanager.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
-    <ClCompile Include="main.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
-    <ClCompile Include="particle.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
-    <ClCompile Include="particleemitter.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
-    <ClCompile Include="playerbullettrailparticle.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
-    <ClCompile Include="sprite.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
-    <ClCompile Include="texture.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
-    <ClCompile Include="texturemanager.cpp">
-      <Filter>Source</Filter>
+      <Filter>Core Engine\Source</Filter>
     </ClCompile>
     <ClCompile Include="label.cpp">
-      <Filter>Source</Filter>
+      <Filter>Core Engine\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="logmanager.cpp">
+      <Filter>Core Engine\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>Core Engine\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="particle.cpp">
+      <Filter>Core Engine\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="particleemitter.cpp">
+      <Filter>Core Engine\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="playerbullettrailparticle.cpp">
+      <Filter>Core Engine\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="sprite.cpp">
+      <Filter>Core Engine\Source</Filter>
     </ClCompile>
     <ClCompile Include="textparticle.cpp">
+      <Filter>Core Engine\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="texture.cpp">
+      <Filter>Core Engine\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="texturemanager.cpp">
+      <Filter>Core Engine\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="enemyspawner.cpp">
       <Filter>Source</Filter>
     </ClCompile>
-    <ClCompile Include="player.cpp">
+    <ClCompile Include="projectile.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="projectilespawner.cpp">
       <Filter>Source</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="animatedsprite.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="backbuffer.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
     <ClInclude Include="enemy.h">
       <Filter>Headers</Filter>
     </ClInclude>
@@ -75,37 +87,61 @@
     <ClInclude Include="game.h">
       <Filter>Headers</Filter>
     </ClInclude>
+    <ClInclude Include="player.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="gamemap.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="maptile.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="tower.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="animatedsprite.h">
+      <Filter>Core Engine\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="backbuffer.h">
+      <Filter>Core Engine\Headers</Filter>
+    </ClInclude>
     <ClInclude Include="inputhandler.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="logmanager.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="particle.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="particleemitter.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="playerbullettrailparticle.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="sprite.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="texture.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="texturemanager.h">
-      <Filter>Headers</Filter>
+      <Filter>Core Engine\Headers</Filter>
     </ClInclude>
     <ClInclude Include="label.h">
-      <Filter>Headers</Filter>
+      <Filter>Core Engine\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="logmanager.h">
+      <Filter>Core Engine\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="particle.h">
+      <Filter>Core Engine\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="particleemitter.h">
+      <Filter>Core Engine\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="playerbullettrailparticle.h">
+      <Filter>Core Engine\Headers</Filter>
     </ClInclude>
     <ClInclude Include="textparticle.h">
+      <Filter>Core Engine\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="texture.h">
+      <Filter>Core Engine\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="sprite.h">
+      <Filter>Core Engine\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="texturemanager.h">
+      <Filter>Core Engine\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="enemyspawner.h">
       <Filter>Headers</Filter>
     </ClInclude>
-    <ClInclude Include="player.h">
+    <ClInclude Include="projectile.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="projectilespawner.h">
       <Filter>Headers</Filter>
     </ClInclude>
   </ItemGroup>
@@ -115,6 +151,15 @@
     </Filter>
     <Filter Include="Source">
       <UniqueIdentifier>{e275bb4f-36a0-4307-956f-8a7439691156}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core Engine">
+      <UniqueIdentifier>{178092df-65ab-420c-bf24-acadfb72aff2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core Engine\Headers">
+      <UniqueIdentifier>{8cee9b43-b6c1-49ad-b699-119bf1159e15}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core Engine\Source">
+      <UniqueIdentifier>{9824331a-27a3-4ac7-b4b4-79bb28ed9cb8}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

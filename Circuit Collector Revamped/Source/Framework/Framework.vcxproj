@@ -85,6 +85,8 @@
   <ItemGroup>
     <ClInclude Include="animatedsprite.h" />
     <ClInclude Include="backbuffer.h" />
+    <ClInclude Include="enemyspawner.h" />
+    <ClInclude Include="gamemap.h" />
     <ClInclude Include="label.h" />
     <ClInclude Include="enemy.h" />
     <ClInclude Include="entity.h" />
@@ -92,18 +94,24 @@
     <ClInclude Include="game.h" />
     <ClInclude Include="inputhandler.h" />
     <ClInclude Include="logmanager.h" />
+    <ClInclude Include="maptile.h" />
     <ClInclude Include="particle.h" />
     <ClInclude Include="particleemitter.h" />
     <ClInclude Include="player.h" />
     <ClInclude Include="playerbullettrailparticle.h" />
+    <ClInclude Include="projectile.h" />
+    <ClInclude Include="projectilespawner.h" />
     <ClInclude Include="sprite.h" />
     <ClInclude Include="textparticle.h" />
     <ClInclude Include="texture.h" />
     <ClInclude Include="texturemanager.h" />
+    <ClInclude Include="tower.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="animatedsprite.cpp" />
     <ClCompile Include="backbuffer.cpp" />
+    <ClCompile Include="enemyspawner.cpp" />
+    <ClCompile Include="gamemap.cpp" />
     <ClCompile Include="label.cpp" />
     <ClCompile Include="enemy.cpp" />
     <ClCompile Include="entity.cpp" />
@@ -112,14 +120,18 @@
     <ClCompile Include="inputhandler.cpp" />
     <ClCompile Include="logmanager.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="maptile.cpp" />
     <ClCompile Include="particle.cpp" />
     <ClCompile Include="particleemitter.cpp" />
     <ClCompile Include="player.cpp" />
     <ClCompile Include="playerbullettrailparticle.cpp" />
+    <ClCompile Include="projectile.cpp" />
+    <ClCompile Include="projectilespawner.cpp" />
     <ClCompile Include="sprite.cpp" />
     <ClCompile Include="textparticle.cpp" />
     <ClCompile Include="texture.cpp" />
     <ClCompile Include="texturemanager.cpp" />
+    <ClCompile Include="tower.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

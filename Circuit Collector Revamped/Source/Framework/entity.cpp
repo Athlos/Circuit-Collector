@@ -37,6 +37,8 @@ Entity::Entity()
 
 Entity::~Entity()
 {
+	delete m_pSprite;
+	m_pSprite = 0;
 }
 
 bool Entity::Initialise(Sprite* sprite)
@@ -57,7 +59,7 @@ void Entity::Process(float deltaTime)
 	m_x += deltaTime * m_velocityX;
 	m_y += deltaTime * m_velocityY;
 
-	if (m_x >= 800-m_pSprite->GetWidth())
+	/*if (m_x >= 800-m_pSprite->GetWidth())
 	{
 		m_x = (800-m_pSprite->GetWidth());
 		m_velocityX = 0;
@@ -66,7 +68,7 @@ void Entity::Process(float deltaTime)
 	{
 		m_x = 0;
 		m_velocityX = 0;
-	}
+	}*/
 
 	m_pSprite->SetX(static_cast<int>(m_x));
 	m_pSprite->SetY(static_cast<int>(m_y));
@@ -155,4 +157,9 @@ void
 Entity::SetVerticalVelocity(float y)
 {
 	m_velocityY = y;
+}
+
+Sprite* Entity::GetSprite()
+{
+	return m_pSprite;
 }

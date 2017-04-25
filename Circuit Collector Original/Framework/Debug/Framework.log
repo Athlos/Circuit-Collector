@@ -1,0 +1,7 @@
+﻿C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V120\Microsoft.CppBuild.targets(388,5): warning MSB8028: The intermediate directory (Debug\) contains files shared from another project (Assignment 1.vcxproj, Framework.vcxproj).  This can lead to incorrect clean and rebuild behavior.
+  backbuffer.cpp
+c:\users\pascal\desktop\sdl projects\circuit collector\circuit-collector\circuit collector original\framework\backbuffer.cpp(130): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+          c:\program files (x86)\microsoft visual studio 12.0\vc\include\stdio.h(356) : see declaration of 'sprintf'
+c:\users\pascal\desktop\sdl projects\circuit collector\circuit-collector\circuit collector original\framework\backbuffer.cpp(134): warning C4996: 'strcat': This function or variable may be unsafe. Consider using strcat_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+          c:\program files (x86)\microsoft visual studio 12.0\vc\include\string.h(118) : see declaration of 'strcat'
+  Framework.vcxproj -> C:\Users\Pascal\Desktop\SDL Projects\Circuit Collector\Circuit-Collector\Circuit Collector Original\Debug\Circuit Breaker.exe

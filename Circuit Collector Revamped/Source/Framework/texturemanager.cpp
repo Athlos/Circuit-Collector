@@ -18,7 +18,22 @@ TextureManager::TextureManager()
 
 TextureManager::~TextureManager()
 {
+	std::map<std::string, Texture*>::iterator textureIter = m_pLoadedTextures.begin();
 
+	while (textureIter != m_pLoadedTextures.end())
+	{
+		if (textureIter->second != 0)
+		{
+			delete textureIter->second;
+			textureIter = m_pLoadedTextures.erase(textureIter);
+		}
+		else
+		{
+			++textureIter;
+		}
+	}
+
+	//m_pLoadedTextures.erase(m_pLoadedTextures.begin(), m_pLoadedTextures.end());
 }
 
 bool 

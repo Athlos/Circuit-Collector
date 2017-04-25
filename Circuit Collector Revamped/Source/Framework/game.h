@@ -1,8 +1,5 @@
-// 717310 C++ SDL Framework
 #ifndef __GAME_H__
 #define __GAME_H__
-
-
 
 // Forward Declarations
 class BackBuffer;
@@ -11,10 +8,22 @@ class Sprite;
 class Label;
 class ParticleEmitter;
 class Player;
+class Tower;
+class GameMap;
+class EnemySpawner;
+class ProjectileSpawner;
 
 #include "fmod.hpp";
 
 #include <vector>;
+
+struct TowerFoundation
+{
+	float x;
+	float y;
+
+	bool isFree;
+};
 
 class Game
 {
@@ -32,10 +41,19 @@ public:
 	bool IsPaused();
 
 	Player* GetPlayer();
+	void SpawnEnemy();
+
+	void Debug_HurtClosest();
+	void Debug_HurtMostHealth();
+	void Debug_HurtLeastHealth();
+	void Debug_SpawnTower();
 	
 protected:
 	void Process(float deltaTime);
+
+	// Draw methods
 	void Draw(BackBuffer& backBuffer);
+	void DrawTowers(BackBuffer& backBuffer);
 
 private:
 	Game(const Game& game);
@@ -68,9 +86,17 @@ protected:
 	const static int SCREEN_WIDTH = 1280;
 	const static int SCREEN_HEIGHT = 720;
 
+	Label* m_debug_fps;
+
 	//GAME ENTITIES
 	ParticleEmitter* m_particles; // Particle emitter
 	Player* m_player; // Player
+
+	std::vector<Tower*> m_towers; // Towers in the game
+	EnemySpawner* m_enemySpawner;
+	ProjectileSpawner* m_projectileSpawner;
+
+	TowerFoundation m_availablePositions[8];
 
 	//AUDIO
 	FMOD::System *system;

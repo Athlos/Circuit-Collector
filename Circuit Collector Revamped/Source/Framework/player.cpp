@@ -9,7 +9,7 @@ Player::Player()
 	, m_currency(100)
 {
 	m_currentMaxHealth = (int)(m_baseMaxHealth * m_healthMultiplier);
-	initialiseLabels();
+	InitialiseLabels();
 }
 
 // Destructor
@@ -42,7 +42,7 @@ void Player::drawPlayer(BackBuffer& backBuffer)
 /*
 Adds amount to current health
 */
-void Player::updateCurrentHealth(int amount)
+void Player::UpdateCurrentHealth(int amount)
 {
 	if (amount != 0)
 	{
@@ -59,14 +59,14 @@ void Player::updateCurrentHealth(int amount)
 		}
 
 		// Update labels
-		updateHealthLabel();
+		UpdateHealthLabel();
 	}
 }
 
 /*
 Adds amount to max health
 */
-void Player::updateMaximumHealth(int amount)
+void Player::UpdateMaximumHealth(int amount)
 {
 	if (amount != 0)
 	{
@@ -85,14 +85,14 @@ void Player::updateMaximumHealth(int amount)
 		}
 
 		// Update labels
-		updateHealthLabel();
+		UpdateHealthLabel();
 	}
 }
 
 /*
 Adds amount to health multiplier
 */
-void Player::updateHealthMultiplier(float amount)
+void Player::UpdateHealthMultiplier(float amount)
 {
 	if (amount != 0)
 	{
@@ -106,14 +106,14 @@ void Player::updateHealthMultiplier(float amount)
 		m_currentMaxHealth = (int)(m_baseMaxHealth * m_healthMultiplier);
 
 		// Update labels
-		updateHealthLabel();
+		UpdateHealthLabel();
 	}
 }
 
 /*
 Adds amount to currency
 */
-void Player::updateCurrency(int amount)
+void Player::UpdateCurrency(int amount)
 {
 	if (amount != 0)
 	{
@@ -125,14 +125,14 @@ void Player::updateCurrency(int amount)
 		}
 
 		// Update labels
-		updateCurrencyLabel();
+		UpdateCurrencyLabel();
 	}
 }
 
 /*
 Initialise the UI labels
 */
-void Player::initialiseLabels()
+void Player::InitialiseLabels()
 {
 	std::string healthString = "Health: " + std::to_string(m_currentHealth) + "/" + std::to_string(m_currentMaxHealth);
 	m_healthLabel = new Label(healthString);
@@ -148,7 +148,7 @@ void Player::initialiseLabels()
 /*
 Update health label info
 */
-void Player::updateHealthLabel()
+void Player::UpdateHealthLabel()
 {
 	std::string healthString = "Health: " + std::to_string(m_currentHealth) + "/" + std::to_string(m_currentMaxHealth);
 	m_healthLabel->SetText(healthString);
@@ -157,7 +157,7 @@ void Player::updateHealthLabel()
 /*
 Update currency label info
 */
-void Player::updateCurrencyLabel()
+void Player::UpdateCurrencyLabel()
 {
 	std::string currencyString = "Electricity: " + std::to_string(m_currency);
 	m_currencyLabel->SetText(currencyString);

@@ -16,35 +16,37 @@ public:
 	// Drawing
 	void drawPlayerUI(BackBuffer& backBuffer);
 	void drawPlayer(BackBuffer& backBuffer);
-	
 
-	// Setters
-	void updateCurrentHealth(int amount);
-	void updateMaximumHealth(int amount);
-	void updateHealthMultiplier(float amount);
-	void updateCurrency(int amount);
+	// Processing
+	void Process(float deltaTime);
+
+	// Updating
+	void UpdateCurrentHealth(int amount);
+	void UpdateMaximumHealth(int amount);
+	void UpdateHealthMultiplier(float amount);
+	void UpdateCurrency(int amount);
 
 private:
-	void initialiseLabels();
-
-	void updateHealthLabel();
-	void updateCurrencyLabel();
+	// Label handling
+	void InitialiseLabels();
+	void UpdateHealthLabel();
+	void UpdateCurrencyLabel();
 
 	//Member data:
 public:
 protected:
-	int m_currentHealth;
-	int m_currentMaxHealth;
-	int m_baseMaxHealth;
-	float m_healthMultiplier;
+	int m_currentHealth; // Current health of the player
+	int m_currentMaxHealth; // Current max health the player can have
+	int m_baseMaxHealth; // Base max health used to calculate current max using multiplier
+	float m_healthMultiplier; // Multiplier to max health, used with base max health
 
-	int m_currency;
+	int m_currency; // Currency the player has to spend
 
 private:
 
 	//UI Elements
-	Label* m_healthLabel;
-	Label* m_currencyLabel;
+	Label* m_healthLabel; // Label for health, formatted: Health: 100/100
+	Label* m_currencyLabel; // Label for currency, formatted: Electricity: 100
 
 };
 

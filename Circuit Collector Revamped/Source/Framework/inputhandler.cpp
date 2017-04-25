@@ -6,6 +6,8 @@
 // Local includes:
 #include "game.h"
 #include "player.h"
+#include "enemyspawner.h"
+#include "enemy.h"
 
 // Library includes:
 #include <cassert>
@@ -51,24 +53,34 @@ void InputHandler::ProcessInput(Game& game)
 					break;
 				case SDLK_1:
 				{
-					game.GetPlayer()->updateCurrency(10);
+					game.Debug_HurtClosest();
 				}
 					break;
 				case SDLK_2:
 				{
-					game.GetPlayer()->updateCurrentHealth(10);
+					game.Debug_HurtLeastHealth();
 				}
 					break;
 				case SDLK_3:
 				{
-					game.GetPlayer()->updateMaximumHealth(10);
+					game.Debug_HurtMostHealth();
 				}
 					break;
 				case SDLK_4:
 				{
-					game.GetPlayer()->updateHealthMultiplier(0.1f);
+					game.GetPlayer()->UpdateHealthMultiplier(0.1f);
 				}
 					break;
+				case SDLK_s:
+				{
+					game.SpawnEnemy();
+				}
+				break;
+				case SDLK_d:
+				{
+					game.Debug_SpawnTower();
+				}
+				break;
 				default:
 					break;
 			}

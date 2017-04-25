@@ -1,5 +1,3 @@
-// 717310 C++ SDL Framework
-
 // This includes:
 #include "game.h"
 
@@ -13,6 +11,12 @@
 #include "label.h"
 #include "particleemitter.h"
 #include "player.h"
+#include "tower.h"
+#include "gamemap.h"
+#include "enemyspawner.h"
+#include "enemy.h"
+#include "projectilespawner.h"
+#include "projectile.h"
 
 // Library includes:
 #include <cassert>
@@ -62,6 +66,21 @@ Game::Game()
 
 Game::~Game()
 {
+	std::vector<Tower*>::iterator towerIter = m_towers.begin();
+
+	while (towerIter != m_towers.end())
+	{
+		if (*towerIter != 0)
+		{
+			delete *towerIter;
+			towerIter = m_towers.erase(towerIter);
+		}
+		else
+		{
+			++towerIter;
+		}
+	}
+
 	delete m_pBackBuffer;
 	m_pBackBuffer = 0;
 
@@ -73,6 +92,15 @@ Game::~Game()
 
 	delete m_player;
 	m_player = 0;
+
+	delete m_enemySpawner;
+	m_enemySpawner = 0;
+
+	delete m_projectileSpawner;
+	m_projectileSpawner = 0;
+
+	delete m_debug_fps;
+	m_debug_fps = 0;
 
 	system->release();
 }
@@ -104,12 +132,34 @@ bool Game::Initialise()
 	//Sprite* pPlayerSprite = m_pBackBuffer->CreateSprite("assets\\wall.png");
 
 	m_particles = new ParticleEmitter();
+	m_enemySpawner = new EnemySpawner();
+	m_projectileSpawner = new ProjectileSpawner();
+
+	SDL_Rect spawnArea;
+	spawnArea.x = 0;
+	spawnArea.w = SCREEN_WIDTH - 64;
+	spawnArea.y = -128;
+	spawnArea.h = 128;
+
+	m_enemySpawner->SetSpawnArea(spawnArea);
+
+	float baseWidth = (float)SCREEN_WIDTH / 8.0f;
+
+	for (int i = 0; i < 8; ++i)
+	{
+		int x1 = (baseWidth * 0.1f) + (baseWidth * i);
+
+		int y1 = SCREEN_HEIGHT - ((baseWidth * 1.1f) * 0.75);
+		
+		m_availablePositions[i].x = x1;
+		m_availablePositions[i].y = y1;
+	}
 
 	//SET UP AUDIO
 	system = NULL;
 
-	result = FMOD::System_Create(&system);      // Create the main system object.
-	result = system->init(32, FMOD_INIT_NORMAL, 0);    // Initialize FMOD.
+	result = FMOD::System_Create(&system); // Create the main system object.
+	result = system->init(32, FMOD_INIT_NORMAL, 0); // Initialize FMOD.
 
 	channel = 0;
 	combatMusic = 0;
@@ -121,6 +171,10 @@ bool Game::Initialise()
 
 	//SET UP UI
 	m_player = new Player();
+
+	m_debug_fps = new Label("");
+	m_debug_fps->SetBounds(0, 0, 48, 32);
+	m_debug_fps->SetColour(0, 0, 0, 50);
 
 	// Update timings
 	m_lastTime = SDL_GetTicks();
@@ -176,6 +230,9 @@ void Game::Process(float deltaTime)
 		m_elapsedSeconds -= 1;
 		m_FPS = m_frameCount;
 		m_frameCount = 0;
+
+		std::string fpsString = std::to_string(m_FPS);
+		m_debug_fps->SetText(fpsString);
 	}
 
 	// Check if game is paused
@@ -186,28 +243,19 @@ void Game::Process(float deltaTime)
 
 	// Update the game world simulation:
 
+	for each (Tower*  tower in m_towers)
+	{
+		tower->Process(deltaTime);
 
-	//std::vector<Bullet*>::iterator iter = m_towerBullets.begin();
+		if (tower->IsReadyToShoot())
+		{
+			m_projectileSpawner->SpawnProjectile(tower);
+			tower->ResetCooldown();
+		}
+	}
 
-	//while (iter != m_towerBullets.end())
-	//{
-	//	Bullet* current = *iter;
-	//	if (current->IsDead() || static_cast<int>(current->GetPositionY()) <= 0)
-	//	{
-	//		iter = m_towerBullets.erase(iter);
-	//		delete current;
-	//	}
-	//	else
-	//	{
-	//		current->Process(deltaTime);
-	//		if (static_cast<int>(current->GetPositionY()) <= 0)
-	//		{
-	//			LogManager::GetInstance().Log("bullet at zero");
-	//		}
-	//		m_particles.SpawnNewParticles(current->GetPositionX() + 4, current->GetPositionY() + 8, 1, m_pBackBuffer, current->GetParticleType());
-	//		iter++;
-	//	}
-	//}
+	m_enemySpawner->Process(deltaTime);
+	m_projectileSpawner->Process(deltaTime);
 
 	m_particles->Process(deltaTime); // Process particles
 
@@ -220,19 +268,48 @@ void Game::Draw(BackBuffer& backBuffer)
 
 	backBuffer.Clear();
 
-	m_particles->Draw(backBuffer);
+	//Draw map
+	m_enemySpawner->Draw(backBuffer);
 
 	//Draw items in all vectors
-	
+	DrawTowers(backBuffer);
 
 	//Draw wall
 	backBuffer.SetDrawColour(0, 0, 0);
-	backBuffer.DrawRectangle(0, SCREEN_HEIGHT - 168, SCREEN_WIDTH, SCREEN_HEIGHT - 128);
+	backBuffer.DrawRectangle(0, SCREEN_HEIGHT - (SCREEN_WIDTH / 8.0f), SCREEN_WIDTH, (SCREEN_HEIGHT - (SCREEN_WIDTH / 8.0f) - 64));
 	
+	m_projectileSpawner->Draw(backBuffer);
+	m_particles->Draw(backBuffer);
+
 	//DRAW UI ELEMENTS
 	m_player->drawPlayerUI(backBuffer);
+	m_debug_fps->Draw(backBuffer);
 
 	backBuffer.Present();
+}
+
+void Game::DrawTowers(BackBuffer& backBuffer)
+{
+	float baseWidth = (float)SCREEN_WIDTH / 8.0f;
+
+	for (int i = 0; i < 8; ++i)
+	{
+		backBuffer.SetDrawColour(150, 150, 150);
+
+		int x1 = (baseWidth * 0.1f) + (baseWidth * i);
+		int x2 = x1 + (baseWidth * 0.8f);
+
+		int y1 = SCREEN_HEIGHT - ((baseWidth * 1.1f) * 0.75);
+		int y2 = y1 + (baseWidth * 0.75);
+
+		backBuffer.DrawRectangle(x1, y1, x2, y2);
+		backBuffer.SetDrawColour(0, 0, 0);
+	}
+
+	for each (Tower* tower in m_towers)
+	{
+		tower->Draw(backBuffer);
+	}
 }
 
 void Game::Quit()
@@ -254,4 +331,62 @@ bool Game::IsPaused()
 Player* Game::GetPlayer()
 {
 	return m_player;
+}
+
+void Game::SpawnEnemy()
+{
+	m_enemySpawner->SpawnEnemy(EnemyType::TANK, *m_pBackBuffer);
+}
+
+void Game::Debug_HurtClosest()
+{
+	if (m_enemySpawner->GetClosestEnemy() != 0)
+	{
+		m_enemySpawner->GetClosestEnemy()->TakeDamage(10);
+	}
+}
+
+void Game::Debug_HurtMostHealth()
+{
+	if (m_enemySpawner->GetMostHealthEnemy() != 0)
+	{
+		m_enemySpawner->GetMostHealthEnemy()->TakeDamage(10);
+	}
+}
+
+void Game::Debug_HurtLeastHealth()
+{
+	if (m_enemySpawner->GetLeastHealthEnemy() != 0)
+	{
+		m_enemySpawner->GetLeastHealthEnemy()->TakeDamage(10);
+	}
+}
+
+void Game::Debug_SpawnTower()
+{
+	if (m_towers.size() < 8)
+	{
+		Tower* newTower = new Tower();
+
+		newTower->Initialise(m_pBackBuffer->CreateSprite("assets\\railturret.png"));
+
+		for (int i = 0; i < 8; ++i)
+		{
+			if (m_availablePositions[i].isFree)
+			{
+				m_availablePositions[i].isFree = false;
+
+				newTower->SetPosition(m_availablePositions[i].x, m_availablePositions[i].y);
+				break;
+			}
+		}
+
+		Projectile* towerProjectile = new Projectile();
+
+		towerProjectile->Initialise(m_pBackBuffer->CreateSprite("assets\\bullet.png"));
+
+		newTower->InitialiseProjectile(towerProjectile);
+
+		m_towers.push_back(newTower);
+	}
 }
